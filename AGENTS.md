@@ -97,11 +97,13 @@ default is `openai` / `gpt-5.5`.
 | `mod/scripts/piagent/global.lua` | Global-script helpers (activation) |
 | `mod/scripts/piagent/json.lua` | Tiny JSON encoder (the OpenMW sandbox has none) |
 | `mod/piagent/cmd.txt` | Command file the sidecar rewrites (atomically) and the mod polls |
-| `openmw/settings.cfg` | Settings template: 1280×720 borderless window, no cursor grab |
+| `openmw/settings.cfg` | Settings template: 1280×720 borderless window, no cursor grab, post-processing with `adjustments` |
+| `openmw/shaders.yaml` | Shader values: `uGamma: 1.1` (a bit brighter). SDL `gamma` would change the display, not the screenshots |
 | `requirements.txt` | Python deps for `.venv/` |
 | `runs/` | Generated: `openmw-config/` (cfg + **openmw.log**), `userdata/` (saves), `sidecar.log`, per-run evidence dirs (`frames/`, `actions.jsonl`, `run.json`, `result.json`) |
 
-Not written yet: `README.md`, and optionally `stream.py` / `play.sh`. See the plan below.
+`README.md` covers setup and play for humans. Optional, not written: `stream.py` / `play.sh`
+(see the plan below).
 
 ## How it works
 
@@ -226,7 +228,9 @@ Verified end to end on the prison ship:
  a fresh game, then runs `look`, `act turn` and `report`. The model received the image and
  `step 1: turn degrees=30, screen change 19.5%`. `report` wrote `result.json` and ended the
  run. The provider request carried only `SYSTEM.md` and the three tools.
-- First real run (GPT-5.5) left the ship at step 110. On the Hatch, `key space` through
+- First real run (GPT-5.5, 12:31) left the ship at step 110, but only after the user typed
+ "try space or e" mid-run. The first unaided success was run `run-2026-09-30T13-40-29`
+ (GPT-5.5, the corrected key bindings, left the ship at step 128). On the Hatch, `key space` through
  `/act` teleports within the key step itself, with the user's app in front. `key e` does
  nothing, since E is jump, and the tool description used to call activate "the E key".
  After the Lua `activate` op, the cell change only showed up during the next action.
@@ -235,7 +239,8 @@ Verified end to end on the prison ship:
 
 Known issues / next fixes, in order:
 
-1. More runs with the corrected key bindings in `.pi/SYSTEM.md`, then prompt tuning.
+1. More unaided runs (don't type hints mid-run if a run is meant to count), then prompt
+ tuning.
 2. The Lua `activate` op: the teleport lands only in the next action, and the agent's first
  Hatch activation did nothing. Consider a longer settle, or remove the op and rely on
  `key space`. Verify `jump`, `stance` and `attack` in practice. The game still disables
@@ -246,7 +251,7 @@ Known issues / next fixes, in order:
 4. First-keystroke reliability: once, a console open/type sequence appeared to lose its
  first key. `reload-lua` has worked since. Keep an eye on it.
 
-At handoff the sidecar (background job) and the game are running, on the Seyda Neen deck.
+At handoff nothing is running.
 
 ## Plan (remaining work)
 
@@ -256,8 +261,7 @@ At handoff the sidecar (background job) and the game are running, on the Seyda N
    and **`play.sh`** (`pi -a --mode json "$@" "Leave the prison ship." | tee runs/<run>/events.jsonl | .venv/bin/python -u stream.py`).
    The main interface stays the interactive pi app, where the user watches actions and
    reasoning.
-3. `README.md` (setup, permissions, model choice), `git init`.
-4. Later: save/resume between runs (menu scripts have `menu.saveGame/loadGame`), more
+3. Later: save/resume between runs (menu scripts have `menu.saveGame/loadGame`), more
    milestones (census office, Balmora, Caius), cost/step logging.
 
 ## Ground rules

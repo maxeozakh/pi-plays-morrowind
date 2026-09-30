@@ -144,7 +144,7 @@ const act = defineTool({
     "with the readied weapon/spell (seconds = how long to hold for a power attack); " +
     "wait {seconds} let time pass without input; " +
     "click {x, y, button?, double?} click at screenshot pixel coordinates (for menus and dialog " +
-    "boxes; a click in the world attacks); type {text} type text into the focused text field; " +
+    "boxes; in the world a left click attacks with whatever is readied); type {text} type text into the focused text field; " +
     "key {key, times?} press a key. After click, type and key, 0.4 s (or `seconds`) passes so the game can react.",
   parameters: Type.Object({
     action: lit(ACTIONS, "What to do"),
