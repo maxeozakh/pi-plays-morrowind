@@ -125,9 +125,8 @@ def _write_config():
         "fallback=Movies_New_Game,piagent_none.bik",
         "",
     ]))
-    settings = CFG_DIR / "settings.cfg"
-    if not settings.exists():  # OpenMW rewrites it on exit; keep its edits
-        settings.write_text((ROOT / "openmw" / "settings.cfg").read_text())
+    for name in ("settings.cfg", "shaders.yaml"):
+        (CFG_DIR / name).write_text((ROOT / "openmw" / name).read_text())
 
 
 def _find_game_pid():

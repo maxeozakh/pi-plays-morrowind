@@ -6,6 +6,7 @@ node_modules/
 mod/piagent/cmd.tmp
 mod/piagent/cmd.txt
 .DS_Store
-# written by OpenMW at runtime; only settings.cfg is a template
+# written by OpenMW at runtime; only settings.cfg and shaders.yaml are templates
 openmw/*
 !openmw/settings.cfg
+!openmw/shaders.yaml
