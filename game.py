@@ -68,7 +68,7 @@ MODEL_WIDTH = int(os.environ.get("MODEL_WIDTH", "1024"))
 REFOCUS = os.environ.get("PI_REFOCUS", "1") != "0"
 PAUSE_BETWEEN = os.environ.get("PI_PAUSE", "0") == "1"
 
-LUA_TIMEOUT = 60.0
+LUA_TIMEOUT = 10.0  # on top of the op's own `seconds`
 BOOT_TIMEOUT = 120.0
 
 # macOS virtual key codes (US layout positions; SDL maps them to scancodes,
@@ -210,9 +210,11 @@ def _write_command(cmd):
     os.replace(tmp, CMD_FILE)
 
 
-def _lua(cmd, timeout=LUA_TIMEOUT):
+def _lua(cmd, timeout=None):
     """Send one command to the mod and wait for its PIAGENT reply."""
     global _seq
+    if timeout is None:
+        timeout = LUA_TIMEOUT + min(float(cmd.get("seconds") or 0), 30)  # the mod's longest op
     _seq += 1
     seq = _seq
     _write_command({"seq": seq, "nonce": _nonce, "pause": PAUSE_BETWEEN, **cmd})
