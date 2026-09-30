@@ -3,6 +3,8 @@
 A cloud LLM plays The Elder Scrolls III: Morrowind (through [OpenMW](https://openmw.org)) on
 macOS, driven by the [pi coding agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent).
 
+![The model's view right after naming its character on the prison ship](docs/start.jpg)
+
 Inspired by [geohot/pi_plays_pokemon](https://github.com/geohot/pi_plays_pokemon), and built
 on the same idea: **the model gets no game context beyond the controls and the screenshots.**
 The harness gives it no cell names, coordinates, stats, object lists, quest text or
