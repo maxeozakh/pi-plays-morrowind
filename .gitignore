@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+runs/
+node_modules/
+mod/piagent/cmd.tmp
+mod/piagent/cmd.txt
+.DS_Store
+# written by OpenMW at runtime; only settings.cfg is a template
+openmw/*
+!openmw/settings.cfg

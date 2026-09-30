@@ -1,0 +1,2 @@
+PLAYER: scripts/piagent/player.lua
+GLOBAL: scripts/piagent/global.lua
