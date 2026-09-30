@@ -176,7 +176,7 @@ ops.release = {
 }
 
 ops.wait = {
-    start = function(cmd) cmd.seconds = clamp(tonumber(cmd.seconds) or 1, 0, 30) end,
+    start = function(cmd) cmd.seconds = clamp(tonumber(cmd.seconds) or 1, 0, 15) end,
     step = function(cmd) if cmd.t >= cmd.seconds then return 'done' end end,
     realtime = true,
 }

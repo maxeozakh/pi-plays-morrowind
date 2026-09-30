@@ -214,7 +214,7 @@ def _lua(cmd, timeout=None):
     """Send one command to the mod and wait for its PIAGENT reply."""
     global _seq
     if timeout is None:
-        timeout = LUA_TIMEOUT + min(float(cmd.get("seconds") or 0), 30)  # the mod's longest op
+        timeout = LUA_TIMEOUT + min(float(cmd.get("seconds") or 0), 15)  # the mod's longest op
     _seq += 1
     seq = _seq
     _write_command({"seq": seq, "nonce": _nonce, "pause": PAUSE_BETWEEN, **cmd})

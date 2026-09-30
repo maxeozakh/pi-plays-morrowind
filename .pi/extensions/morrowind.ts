@@ -149,7 +149,7 @@ const act = defineTool({
   parameters: Type.Object({
     action: lit(ACTIONS, "What to do"),
     dir: Type.Optional(lit(["forward", "back", "left", "right"] as const, "move: direction")),
-    seconds: Type.Optional(Type.Number({ description: "move: 0.1-10 (default 1); wait: 0-30; attack: 0.05-3; click/type/key: settle time" })),
+    seconds: Type.Optional(Type.Number({ description: "move: 0.1-10 (default 1); wait: 0-15; attack: 0.05-3; click/type/key: settle time" })),
     run: Type.Optional(Type.Boolean({ description: "move: run instead of walk (default true)" })),
     degrees: Type.Optional(Type.Number({ description: "turn: -180..180, + = right" })),
     pitch: Type.Optional(Type.Number({ description: "turn: + = look down, - = look up" })),
